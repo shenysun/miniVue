@@ -48,8 +48,8 @@ export class Compiler {
     }
 
     private compileText(node: Node): void {
-        let reg = /\{\{(.+?)\}\}/;
-        let value = node.textContent || '';
+        const reg = /\{\{(.+?)\}\}/,
+            value = node.textContent || '';
 
         if (reg.test(value)) {
             let key = RegExp.$1.trim();
@@ -58,7 +58,7 @@ export class Compiler {
                 this.vm,
                 key,
                 new Method((val: string) => {
-                    node.textContent = val;
+                    node.textContent = value.replace(reg, val);
                 }),
             );
         }

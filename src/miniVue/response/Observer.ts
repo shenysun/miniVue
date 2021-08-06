@@ -2,7 +2,7 @@ import { Helper } from '../helper/Helper';
 import { Dep } from './Dep';
 
 /**
- * 观察者
+ * Observer 主要是用来监视 vm.$data 的变化，并且在变化时通知与其相关的 Watcher 来运行回调函数。
  */
 export class Observer {
     constructor(data: any) {

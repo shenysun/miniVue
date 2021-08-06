@@ -2,11 +2,12 @@ import { MiniVue } from '../miniVue/MiniVue';
 const vm = new MiniVue({
     el: '#app',
     data: {
-        count: 'hello',
+        text: '白日依山尽，黄河入海流',
+        count: 1,
     },
     methods: {
-        onHandle() {
-            console.log('handler click');
+        handClick() {
+            vm.count++;
         },
     },
 });

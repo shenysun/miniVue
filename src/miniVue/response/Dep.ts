@@ -1,23 +1,24 @@
 import { Watcher } from './Watcher';
 
 /**
- * 依赖类
+ * dependency 依赖类---收集订阅，发布通知
  */
 export class Dep {
     public static target: any;
-    private deps!: Set<Watcher>;
+    // 所有订阅者
+    private subs!: Set<Watcher>;
 
     constructor() {
-        this.deps = new Set();
+        this.subs = new Set();
     }
 
     public add(dep: Watcher): void {
         if (dep && dep['update']) {
-            this.deps.add(dep);
+            this.subs.add(dep);
         }
     }
 
     public notify(): void {
-        this.deps.forEach((dep) => dep.update());
+        this.subs.forEach((dep) => dep.update());
     }
 }
