@@ -1,4 +1,4 @@
-import { Compiler } from './Compiler/Compiler';
+import { Compiler } from './compiler/Compiler';
 import { Helper } from './helper/Helper';
 import { Observer } from './response/Observer';
 import { IVueOptions } from './types/types';
