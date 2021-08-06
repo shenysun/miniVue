@@ -12,12 +12,18 @@ export class Dep {
         this.subs = new Set();
     }
 
+    /**
+     * 收集订阅
+     */
     public add(dep: Watcher): void {
         if (dep && dep['update']) {
             this.subs.add(dep);
         }
     }
 
+    /**
+     * 发布通知
+     */
     public notify(): void {
         this.subs.forEach((dep) => dep.update());
     }

@@ -21,12 +21,15 @@ export class MiniVue {
         this.$data = options.data;
         this.$methods = options.methods;
 
-        //  data 每一个值赋值在 this上
-        this.proxyData(options.data);
+        this.proxyData(this.$data);
         new Observer(this.$data);
         new Compiler(this);
     }
 
+    /**
+     * data 每一个值赋值在 MiniVue 实例上
+     * @param data
+     */
     private proxyData(data: any): void {
         for (const key in data) {
             Object.defineProperty(this, key, {

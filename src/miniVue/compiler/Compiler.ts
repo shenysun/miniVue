@@ -6,12 +6,10 @@ import { Watcher } from '../response/Watcher';
  * 编译器，解析 {{}} v-model ...
  */
 export class Compiler {
-    private vm: MiniVue;
     private el: HTMLElement | null;
     private methods: any;
 
-    constructor(vm: MiniVue) {
-        this.vm = vm;
+    constructor(private vm: MiniVue) {
         this.el = vm.$el;
         this.methods = vm.$methods;
 

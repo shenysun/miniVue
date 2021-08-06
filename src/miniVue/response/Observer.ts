@@ -21,6 +21,10 @@ export class Observer {
         }
     }
 
+    /**
+     * 拦截 data 上的每一个值
+     * getter 添加订阅，setter 如果变更则发布通知
+     */
     private defineReactive(obj: any, key: string, val: any): void {
         const self = this;
         // 对象内可能还有对象，也要遍历下
