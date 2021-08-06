@@ -6,12 +6,12 @@ import { IVueOptions } from './types/types';
 export class MiniVue {
     [key: string]: any;
 
-    public $options!: IVueOptions;
+    public $options!: IVueOptions<MiniVue>;
     public $el!: HTMLElement | null;
     public $data: any;
     public $methods!: Object;
 
-    constructor(options: IVueOptions) {
+    constructor(options: IVueOptions<MiniVue>) {
         if (!Helper.isObject(options.data)) {
             throw new Error('data 必须是一个对象，因为数组、方法功能还没实现');
         }

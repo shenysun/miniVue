@@ -15,10 +15,20 @@
             margin: 0;
         }
 
+        h2 {
+            margin: 0 0 15px 0;
+        }
+
         #app {
             width: 90%;
             margin: 0 auto;
             font-size: 20px;
+        }
+
+        .example {
+            margin-bottom: 10px;
+            background-color: #f4f4f4;
+            padding: 10px;
         }
     </style>
 </head>
@@ -26,18 +36,19 @@
 <body>
     <div id="app">
         <section class="example v-text">
-            <h2># example v-text</h2>
+            <h2># Example v-text</h2>
             <span v-text="text"></span>
-            <p>click count = {{ count }} ，👌🏻 </p>
+            <!-- 测试多文本 -->
+            <p>点击 {{ count }} 次 ------- {{ text }}</p>
         </section>
 
         <section class="example v-click">
-            <h2># example v-click</h2>
-            <button v-click='handClick'>add</button>
+            <h2># Example v-click</h2>
+            <button v-click='handClick'>Add +1</button>
         </section>
 
         <section class="example v-model">
-            <h2># example v-model</h2>
+            <h2># Example v-model</h2>
             <input type="text" v-model='count'>
         </section>
 

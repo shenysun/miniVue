@@ -1,8 +1,8 @@
 /**
  * new miniVue -> options类型
  */
-export interface IVueOptions {
+export interface IVueOptions<T> {
     el: string | HTMLElement;
-    data: any;
-    methods: Object;
+    data: object;
+    methods: { [key: string]: (this: T, ...args: any[]) => any };
 }

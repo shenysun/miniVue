@@ -48,19 +48,45 @@ export class Compiler {
     }
 
     private compileText(node: Node): void {
-        const reg = /\{\{(.+?)\}\}/,
-            value = node.textContent || '';
+        // const reg = /\{\{(.+?)\}\}/,
+        //     value = node.textContent || '';
 
-        if (reg.test(value)) {
-            let key = RegExp.$1.trim();
-            node.textContent = value.replace(reg, this.vm[key]);
-            new Watcher(
-                this.vm,
-                key,
-                new Method((val: string) => {
-                    node.textContent = value.replace(reg, val);
-                }),
-            );
+        // if (reg.test(value)) {
+        //     let key = RegExp.$1.trim();
+        //     node.textContent = value.replace(reg, this.vm[key]);
+        //     new Watcher(
+        //         this.vm,
+        //         key,
+        //         new Method((val: string) => {
+        //             node.textContent = value.replace(reg, val);
+        //         }),
+        //     );
+        // }
+
+        const matchReg = /(?<=\{\{)(.+?)(?=\}\})/g, // 不包含 {{}}
+            replaceReg = /\{\{(.+?)\}\}/g, // 包含 {{}}
+            textContent = node.textContent || '';
+        let matchArray = textContent.match(matchReg);
+        if (matchArray && matchArray.length) {
+            const updateText = (): void => {
+                let i = 0;
+                node.textContent = textContent.replace(replaceReg, () => {
+                    let key = matchArray![i++].trim();
+                    return this.vm[key];
+                });
+            };
+
+            matchArray.forEach((match) => {
+                let key = match.trim();
+                new Watcher(
+                    this.vm,
+                    key,
+                    new Method((val: string) => {
+                        updateText();
+                    }),
+                );
+            });
+            updateText();
         }
     }
 

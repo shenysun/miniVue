@@ -7,7 +7,7 @@ const vm = new MiniVue({
     },
     methods: {
         handClick() {
-            vm.count++;
+            this.count++;
         },
     },
 });
