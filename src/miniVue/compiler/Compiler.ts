@@ -34,7 +34,7 @@ export class Compiler {
         });
     }
 
-    private update(node: HTMLElement, key: string, attrName: string, val: any): void {
+    private update(node: Node, key: string, attrName: string, val: any): void {
         if (attrName === 'text') {
             node.textContent = val;
             new Watcher(this.vm, key, new Method((val: string) => (node.textContent = val)));
@@ -51,21 +51,6 @@ export class Compiler {
     }
 
     private compileText(node: Node): void {
-        // const reg = /\{\{(.+?)\}\}/,
-        //     value = node.textContent || '';
-
-        // if (reg.test(value)) {
-        //     let key = RegExp.$1.trim();
-        //     node.textContent = value.replace(reg, this.vm[key]);
-        //     new Watcher(
-        //         this.vm,
-        //         key,
-        //         new Method((val: string) => {
-        //             node.textContent = value.replace(reg, val);
-        //         }),
-        //     );
-        // }
-
         const matchReg = /(?<=\{\{)(.+?)(?=\}\})/g, // 不包含 {{}}
             replaceReg = /\{\{(.+?)\}\}/g, // 包含 {{}}
             textContent = node.textContent || '';
@@ -98,23 +83,29 @@ export class Compiler {
             Array.from(node.attributes).forEach((attr) => {
                 let attrName = attr.name;
                 if (this.isDirective(attrName)) {
+                    // 以 ‘v-’开头 v-on:click || v-model / v-text
                     attrName = attrName.indexOf(':') > -1 ? attrName.substr(5) : attrName.substr(2);
-                    let key = attr.value;
-                    this.update(node, key, attrName, this.vm[key]);
+                } else if (attrName.startsWith('@')) {
+                    // 以 ‘@’ 开头 @click
+                    attrName = attrName.substr(1);
+                } else {
+                    return;
                 }
+                let key = attr.value;
+                this.update(node, key, attrName, this.vm[key]);
             });
         }
     }
 
-    private isDirective(dir: string) {
+    private isDirective(dir: string): boolean {
         return dir.startsWith('v-');
     }
 
-    private isTextNode(node: Node) {
+    private isTextNode(node: Node): boolean {
         return node.nodeType === 3;
     }
 
-    private isElementNode(node: Node) {
+    private isElementNode(node: Node): boolean {
         return node.nodeType === 1;
     }
 }

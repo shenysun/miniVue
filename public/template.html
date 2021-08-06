@@ -44,12 +44,13 @@
 
         <section class="example v-click">
             <h2># Example v-click</h2>
-            <button v-click='handClick'>Add +1</button>
+            <button v-on:click='handIncrease'>Increase 1</button>
+            <button @click='handReduce'>Reduce 1</button>
         </section>
 
         <section class="example v-model">
             <h2># Example v-model</h2>
-            <input type="text" v-model='count'>
+            <input type="text" v-model:='count'>
         </section>
 
     </div>
