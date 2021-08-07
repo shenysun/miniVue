@@ -32,22 +32,6 @@ export class Compiler {
         });
     }
 
-    private update(node: Node, key: string, attrName: string, val: any): void {
-        if (attrName === 'text') {
-            node.textContent = val;
-            new Watcher(this.vm, key, new Method((val: string) => (node.textContent = val)));
-        } else if (attrName === 'model') {
-            const inputEle = node as HTMLInputElement;
-            inputEle.value = val;
-            new Watcher(this.vm, key, new Method((val: string) => (inputEle.value = val)));
-            inputEle.addEventListener('input', () => {
-                this.vm[key] = inputEle.value;
-            });
-        } else if (attrName === 'click') {
-            node.addEventListener(attrName, this.methods[key].bind(this.vm));
-        }
-    }
-
     private compileText(node: Node): void {
         const matchReg = /(?<=\{\{)(.+?)(?=\}\})/g, // 不包含 {{}}
             replaceReg = /\{\{(.+?)\}\}/g, // 包含 {{}}
@@ -92,6 +76,29 @@ export class Compiler {
                 let key = attr.value;
                 this.update(node, key, attrName, this.vm[key]);
             });
+        }
+    }
+
+    /**
+     * 处理各种指令
+     * @param node 指令对应节点
+     * @param key 指令名称对应的值 v-attrName=key
+     * @param attrName 指令名称
+     * @param val data[key] || methods[key]
+     */
+    private update(node: Node, key: string, attrName: string, val: any): void {
+        if (attrName === 'text') {
+            node.textContent = val;
+            new Watcher(this.vm, key, new Method((val: string) => (node.textContent = val)));
+        } else if (attrName === 'model') {
+            const inputEle = node as HTMLInputElement;
+            inputEle.value = val;
+            new Watcher(this.vm, key, new Method((val: string) => (inputEle.value = val)));
+            inputEle.addEventListener('input', () => {
+                this.vm[key] = inputEle.value;
+            });
+        } else if (attrName === 'click') {
+            node.addEventListener(attrName, this.methods[key].bind(this.vm));
         }
     }
 

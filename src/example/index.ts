@@ -14,4 +14,5 @@ const vm = new MiniVue({
         },
     },
 });
+(window as any)['vm'] = vm;
 console.log(vm);
