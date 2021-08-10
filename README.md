@@ -1,6 +1,6 @@
 # MiniVue
 
-使用 TypeScript 写一个 Vue2.x mini版本
+使用 TypeScript 写一个 Vue2.x mini 版本
 
 ## 如何运行 ?
 
@@ -8,15 +8,15 @@ npm install
 
 npm run serve
 
-
-
 ## Observer 类
 
 ### 职责
-劫持data，监听变化。
+
+劫持 data，监听变化。
 
 ### 实现
-遍历Vue实例data所有 `property` ，并且转换成 `getter` 和 `setter` ，在 `getter` 中收集依赖，在 `setter` 中发送通知。
+
+遍历 Vue 实例 data 所有 `property` ，并且转换成 `getter` 和 `setter` ，在 `getter` 中收集依赖，在 `setter` 中发送通知。
 
 ```javascript
 Object.defineProperty(obj, key, {
@@ -37,18 +37,17 @@ Object.defineProperty(obj, key, {
 });
 ```
 
-
-
 ## Dep 依赖类
 
 ### 职责
+
 统一管理单个数据的所有依赖。协助 `Observer` 收集订阅、发布通知。
 
 ### 实现
 
 分为收集订阅和发布通知两个方法。
 
-```javasc
+```javascript
 /**
  * 收集订阅
  */
@@ -66,9 +65,7 @@ public notify(): void {
 }
 ```
 
-
-
-## Watcher类
+## Watcher 类
 
 ### 职责
 
@@ -101,8 +98,6 @@ public update(): void {
 }
 ```
 
-
-
 ## Compiler 类
 
 ### 职责
@@ -129,7 +124,7 @@ private compile(el: Node): void {
 }
 ```
 
-解析“Mustache”（双大括号）语法 
+解析“Mustache”（双大括号）语法
 
 ```javascript
 private compileText(node: Node): void {
@@ -210,9 +205,7 @@ private update(node: Node, key: string, attrName: string, val: any): void {
 }
 ```
 
-
-
-## MiniVue工作流程图
+## MiniVue 工作流程图
 
 <img src='./assets/Vue双向绑定图解.jpg'>
 
